@@ -32,13 +32,31 @@ namespace TesteImposto
 
             InitializeComponent();
             dataGridViewPedidos.AutoGenerateColumns = true;                       
-            dataGridViewPedidos.DataSource = GetTablePedidos();
             CarregarCombos();
             ProcessarNota = new ProcessarNota(this, OnAtulizarProgressBar);
             EventPropiedadePedidos += new DelegatePropiedadePedidos(CarregarPropiedadesPedido);
+            GetTablePedidos();
+
         }
 
-        #region Private Methodos
+        #region Private Events
+        private void buttonGerarNotaFiscal_Click(object sender, EventArgs e)
+        {
+            if (ValidarProcessamento()) return;
+
+            var t = new Thread(new ThreadStart(GerarNotaFiscal));
+            t.Start();
+        }
+        protected virtual void OnAtulizarProgressBar(string mensagem, int value)
+        {
+            this.Invoke(new DelegateAtulizarProgressBar(OnEventAtualizarStatus), mensagem, value);
+        }
+
+        protected virtual void OnEventAtualizarStatus(string mensagem, int value)
+        {
+            labelMsg.Text = mensagem;
+            progressBarCalcular.Value++;
+        }
         #endregion
 
         private void CarregarCombos()
@@ -53,23 +71,15 @@ namespace TesteImposto
             comboBoxEstadoOrigem.ValueMember = "Uf";
         }
 
-        public object GetTablePedidos()
+        private void GetTablePedidos()
         {
             var table = new DataTable("pedidos");
             table.Columns.Add(new DataColumn("Nome do produto", typeof(string)));
             table.Columns.Add(new DataColumn("Codigo do produto", typeof(string)));
             table.Columns.Add(new DataColumn("Valor", typeof(decimal)));
             table.Columns.Add(new DataColumn("Brinde", typeof(bool)));
-                     
-            return table;
-        }
 
-        private void buttonGerarNotaFiscal_Click(object sender, EventArgs e)
-        {
-            if (ValidarProcessamento()) return;
-
-            var t = new Thread(new ThreadStart(GerarNotaFiscal));
-             t.Start();
+            dataGridViewPedidos.DataSource = table;
         }
 
         private void GerarNotaFiscal()
@@ -117,16 +127,6 @@ namespace TesteImposto
             return true;
         }
 
-
-        protected virtual void OnAtulizarProgressBar(string mensagem, int value)
-        {
-            this.Invoke(new DelegateAtulizarProgressBar(OnEventAtualizarStatus), mensagem, value);
-        }
-
-        protected virtual void OnEventAtualizarStatus(string mensagem, int value)
-        {
-            labelMsg.Text = mensagem;
-            progressBarCalcular.Value++;
-        }
+      
     }
 }

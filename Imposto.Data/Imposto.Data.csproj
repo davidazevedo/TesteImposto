@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Imposto.Data</RootNamespace>
     <AssemblyName>Imposto.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\INotaFiscalRepository.cs" />
     <Compile Include="NotaFiscalRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -48,6 +50,12 @@
       <Project>{2339c0b3-1e95-4cd3-bfba-64b377857016}</Project>
       <Name>Imposto.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SQL\CRIAR_BANCO_DADOS.sql" />
+    <Content Include="SQL\POPULAR_BANCO_DADOS.sql" />
+    <Content Include="SQL\P_NOTA_FISCAL.sql" />
+    <Content Include="SQL\P_NOTA_FISCAL_ITEM.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

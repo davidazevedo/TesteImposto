@@ -7,7 +7,7 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        public ProcessarNota ProcessarNota { get; }
+        private readonly  ProcessarNota ProcessarNota;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -30,6 +30,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+           
+
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -101,6 +103,7 @@
             // 
             this.dataGridViewPedidos.AllowUserToOrderColumns = true;
             this.dataGridViewPedidos.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridViewPedidos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridViewPedidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewPedidos.Location = new System.Drawing.Point(6, 109);
             this.dataGridViewPedidos.Name = "dataGridViewPedidos";
@@ -129,6 +132,7 @@
             // 
             // comboBoxEstadoOrigem
             // 
+            this.comboBoxEstadoOrigem.BackColor = System.Drawing.SystemColors.Info;
             this.comboBoxEstadoOrigem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxEstadoOrigem.FormattingEnabled = true;
             this.comboBoxEstadoOrigem.Location = new System.Drawing.Point(137, 43);
@@ -138,6 +142,7 @@
             // 
             // comboBoxEstadoDestino
             // 
+            this.comboBoxEstadoDestino.BackColor = System.Drawing.SystemColors.Info;
             this.comboBoxEstadoDestino.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxEstadoDestino.FormattingEnabled = true;
             this.comboBoxEstadoDestino.Location = new System.Drawing.Point(468, 43);
@@ -159,7 +164,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(771, 468);
             this.Controls.Add(this.labelMsg);
             this.Controls.Add(this.comboBoxEstadoDestino);
@@ -181,7 +186,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPedidos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
+         
         }
 
         #endregion

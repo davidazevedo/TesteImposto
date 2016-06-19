@@ -9,14 +9,17 @@ using System.Xml.Serialization;
 
 namespace Imposto.Data
 {
-    public class NotaFiscalRepository
+    public class NotaFiscalRepository : INotaFiscalRepository
     {
+        public NotaFiscalRepository ()
+        {
+            connection = new SqlConnection("Server=172.200.29.30;Database=notafiscal;Initial Catalog=notafiscal;Persist Security Info=True;Integrated Security=true;");
+        }
+
         private readonly object ConfigurationManager;
 
-        public void Salvar(NotaFiscal nota)
+        public void SalvarNotaFiscal(NotaFiscal nota)
         {
-            using (SqlConnection connection = new SqlConnection("Server=172.200.29.30;Database=notafiscal;Initial Catalog=notafiscal;Persist Security Info=True;Integrated Security=true;"))
-            {
                 using (SqlCommand cmd = new SqlCommand("[dbo].[P_NOTA_FISCAL]", connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -43,14 +46,14 @@ namespace Imposto.Data
                         foreach (var item in nota.ItensDaNotaFiscal)
                         {
                             item.IdNotaFiscal = (int)id;
-                            SalvarItem(item, connection);
+                            SalvarItem(item);
                         }
                     }
                 }
-            }
+            
         }
 
-        private void SalvarItem(NotaFiscalItem item, SqlConnection connection)
+        private void SalvarItem(NotaFiscalItem item)
         {
             using (SqlCommand cmd = new SqlCommand("[dbo].[P_NOTA_FISCAL_ITEM]", connection))
             {
@@ -72,6 +75,13 @@ namespace Imposto.Data
 
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        public SqlConnection connection { get; set; }
+
+        public void Dispose()
+        {
+            connection.Dispose();
         }
     }
 }
