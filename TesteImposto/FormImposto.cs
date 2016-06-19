@@ -88,7 +88,9 @@ namespace TesteImposto
 
             dataGridViewPedidos.DataSource = table;
         }
-
+        /// <summary>
+        /// Persistencia em Banco de Dados e Serialização em Xml
+        /// </summary>
         private void GerarNotaFiscal()
         {
 
