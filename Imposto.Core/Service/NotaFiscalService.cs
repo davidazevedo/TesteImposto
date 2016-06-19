@@ -1,4 +1,6 @@
-﻿using Imposto.Core.Domain;
+﻿using Imposto.Core.Data;
+using Imposto.Core.Domain;
+using Imposto.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,8 +13,10 @@ using System.Xml.Serialization;
 
 namespace Imposto.Core.Service
 {
-    public class NotaFiscalService
+    public class NotaFiscalService : INotaFiscalService
     {
+        private NotaFiscalRepository _notaFiscalRepository;
+
         public NotaFiscalService(string caminhoxml)
         {
             Caminhoxml = caminhoxml;
@@ -28,16 +32,21 @@ namespace Imposto.Core.Service
                 _notaFiscal = new NotaFiscal();
                 _notaFiscal.ItensDaNotaFiscal = _notaFiscal.EmitirNotaFiscal(pedido);
 
-                if (!GerarNotaFiscalXml(_notaFiscal))
-                    return false;
+                var result = GerarNotaFiscalXml(_notaFiscal);
+               
+                if (result)
+                {
+                    //Persiste nota fiscal
+                    _notaFiscalRepository.Salvar(_notaFiscal);
+                }
+
+                    return result;
             }
             catch (Exception)
             {
 
                 return false;
             }
-
-            return true;
         }
         public bool GerarNotaFiscalXml(NotaFiscal notaFiscalItem)
         {

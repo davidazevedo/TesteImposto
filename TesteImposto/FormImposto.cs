@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Imposto.Core.Domain;
 using TesteImposto.Properties;
+using CodeX.Windows.Forms;
 
 namespace TesteImposto
 {
-    public partial class FormImposto : Form
+    public partial class FormImposto : RichForm
     {
         public readonly Pedido Pedido = new Pedido();
 
@@ -36,7 +37,9 @@ namespace TesteImposto
             ProcessarNota = new ProcessarNota(this, OnAtulizarProgressBar);
             EventPropiedadePedidos += new DelegatePropiedadePedidos(CarregarPropiedadesPedido);
             GetTablePedidos();
-
+            AutoApplytThemeToControls = true; //Applies theme to all the controls as a Whole
+            ApplyThemeFromConfiguration("MetroBlue");
+            Title.Text = "Gerador de Notas Fiscais";
         }
 
         #region Private Events
@@ -69,6 +72,10 @@ namespace TesteImposto
             comboBoxEstadoOrigem.DataSource = new Estado().GerarEstado();
             comboBoxEstadoOrigem.DisplayMember = "Descricao";
             comboBoxEstadoOrigem.ValueMember = "Uf";
+
+
+            comboBoxEstadoOrigem.SelectedIndex = -1;
+            comboBoxEstadoDestino.SelectedIndex = -1;
         }
 
         private void GetTablePedidos()
@@ -92,15 +99,26 @@ namespace TesteImposto
             this.Invoke(EventPropiedadePedidos);
             ProcessarNota.AdicionarPedidos(DataSource);
 
-            MessageBox.Show(service.GerarNotaFiscal(Pedido)
+            var result = service.GerarNotaFiscal(Pedido);
+
+            MessageBox.Show(result
                 ? "Operação efetuada com sucesso"
                 : "Não foi possivel realizar esta operação");
+
+
+            if (result)
+            {
+                comboBoxEstadoOrigem.SelectedIndex = -1;
+                comboBoxEstadoDestino.SelectedIndex = -1;
+
+                textBoxNomeCliente.Text = "";
+            }
         }
 
         private void CarregarPropiedadesPedido()
         {
             DataSource = (DataTable)dataGridViewPedidos.DataSource;
-            progressBarCalcular.Maximum = DataSource.Rows.Count+1;
+            progressBarCalcular.Maximum = DataSource.Rows.Count;
          //   progressBarCalcular.Value = -1;
             Pedido.EstadoOrigem = comboBoxEstadoDestino.SelectedValue.ToString();
             Pedido.EstadoDestino = comboBoxEstadoDestino.SelectedValue.ToString();

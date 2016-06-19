@@ -33,12 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeX, Version=1.0.4823.41198, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CodeX.1.0.2\lib\net40\CodeX.dll</HintPath>
+    <Reference Include="CodeX, Version=1.0.4911.730, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CodeX.1.0.5\lib\net40\CodeX.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CodeX.Windows.Forms, Version=1.0.4827.1035, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CodeX.Windows.Forms.1.0.8\lib\net40\CodeX.Windows.Forms.dll</HintPath>
+    <Reference Include="CodeX.Windows.Forms, Version=1.1.4866.39281, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CodeX.Windows.Forms.1.1.3\lib\net40\CodeX.Windows.Forms.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
