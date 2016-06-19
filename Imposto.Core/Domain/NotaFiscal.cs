@@ -144,6 +144,12 @@ namespace Imposto.Core.Domain
                 {
                     notaFiscalItem.BaseIcms = itemPedido.ValorItemPedido;
                 }
+
+                if (this.EstadoOrigem == "SP" && this.EstadoDestino == "RO")
+                {
+                    notaFiscalItem.Cfop = "6.006";
+                }//   CFOP como 6.006
+
                 notaFiscalItem.ValorIcms = notaFiscalItem.BaseIcms*notaFiscalItem.AliquotaIcms;
 
                 if (itemPedido.Brinde != null && itemPedido.Brinde.Value)
